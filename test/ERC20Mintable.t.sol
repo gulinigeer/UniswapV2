@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Unlicense
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.0;
 
 import "forge-std/Test.sol";
 import "./mocks/ERC20Mintable.sol";
@@ -14,13 +14,13 @@ contract ERC20MintableTest is Test{
     }
 
     function testMint() public{
-        e.mint(100, owner);
-        assertEq(e.balanceOf(owner), 100);
+        e.mint(500, owner);
+        assertEq(e.balanceOf(owner), 500);
     }
 
     function testBurn() public{
-        e.mint(100, owner);
-        e.burn(owner, 100);
+        e.mint(500, owner);
+        e.burn(owner, 500);
         assertEq(e.balanceOf(owner), 0);
     }
 }
