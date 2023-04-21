@@ -39,24 +39,6 @@ contract UniswapV2RouterTest is Test {
         encoded = abi.encodeWithSignature(error);
     }
 
-    // function testAddLiquidityCreatesPair() public {
-    //     tokenA.approve(address(router), 1 ether);
-    //     tokenB.approve(address(router), 1 ether);
-
-    //     router.addLiquidity(
-    //         address(tokenA),
-    //         address(tokenB),
-    //         1 ether,
-    //         1 ether,
-    //         1 ether,
-    //         1 ether,
-    //         address(this)
-    //     );
-
-    //     address pairAddress = factory.pairs(address(tokenA), address(tokenB));
-    //     assertEq(pairAddress, 0xa9441157A02a7a5038cFf661049ad29219bB5080);
-    // }
-
     function testAddLiquidityNoPair() public {
         tokenA.approve(address(router), 1 ether);
         tokenB.approve(address(router), 1 ether);
@@ -393,7 +375,6 @@ contract UniswapV2RouterTest is Test {
             address(this)
         );
 
-        // Swap 0.3 TKNA for ~0.186 TKNB
         assertEq(
             tokenA.balanceOf(address(this)),
             20 ether - 1 ether - 0.3 ether
@@ -443,7 +424,6 @@ contract UniswapV2RouterTest is Test {
             address(this)
         );
 
-        // Swap 0.3 TKNA for ~0.186 TKNB
         assertEq(
             tokenA.balanceOf(address(this)),
             20 ether - 1 ether - 0.3 ether

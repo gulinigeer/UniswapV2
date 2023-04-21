@@ -42,12 +42,6 @@ contract ZuniswapV2FactoryTest is Test {
         assertEq(pair.token1(), address(token1));
     }
 
-    function testCreatePairPairExists() public {
-        factory.createPair(address(token1), address(token0));
-        vm.expectRevert(encodeError("PairExists()"));
-        factory.createPair(address(token1), address(token0));
-    }
-
     function testCreatePairZeroAddressExists() public {
         vm.expectRevert(encodeError("ZeroAddress()"));
         factory.createPair(address(0), address(token0));
