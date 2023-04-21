@@ -93,7 +93,7 @@ contract ZuniswapV2PairTest is Test {
         assertEq(blockTimestampLast, expected, "unexpected blockTimestampLast");
     }
 
-    function testMintBootstrap() public {
+    function test_MintBootstrap() public {
         token0.transfer(address(pair), 1 ether);
         token1.transfer(address(pair), 1 ether);
 
@@ -104,7 +104,7 @@ contract ZuniswapV2PairTest is Test {
         assertEq(pair.totalSupply(), 1 ether);
     }
 
-    function testMintWhenTheresLiquidity() public {
+    function test_MintWhenTheresLiquidity() public {
         token0.transfer(address(pair), 1 ether);
         token1.transfer(address(pair), 1 ether);
 
@@ -122,7 +122,7 @@ contract ZuniswapV2PairTest is Test {
         assertReserves(3 ether, 3 ether);
     }
 
-    function testMintUnbalanced() public {
+    function test_MintUnbalanced() public {
         token0.transfer(address(pair), 1 ether);
         token1.transfer(address(pair), 1 ether);
 
@@ -138,12 +138,12 @@ contract ZuniswapV2PairTest is Test {
         assertReserves(3 ether, 2 ether);
     }
 
-    function testMintLiquidityUnderflow() public {
+    function test_MintLiquidityUnderflow() public {
         vm.expectRevert(encodeError("Panic(uint256)", 0x11));
         pair.mint(address(this));
     }
 
-    function testMintZeroLiquidity() public {
+    function test_MintZeroLiquidity() public {
         token0.transfer(address(pair), 1000);
         token1.transfer(address(pair), 1000);
 
@@ -151,7 +151,7 @@ contract ZuniswapV2PairTest is Test {
         pair.mint(address(this));
     }
 
-    function testBurn() public {
+    function test_Burn() public {
         token0.transfer(address(pair), 1 ether);
         token1.transfer(address(pair), 1 ether);
 
@@ -168,7 +168,7 @@ contract ZuniswapV2PairTest is Test {
         assertEq(token1.balanceOf(address(this)), 10 ether - 1000);
     }
 
-    function testBurnUnbalanced() public {
+    function test_BurnUnbalanced() public {
         token0.transfer(address(pair), 1 ether);
         token1.transfer(address(pair), 1 ether);
 
@@ -190,7 +190,7 @@ contract ZuniswapV2PairTest is Test {
         assertEq(token1.balanceOf(address(this)), 10 ether - 1000);
     }
 
-    function testBurnUnbalancedDifferentUsers() public {
+    function test_BurnUnbalancedDifferentUsers() public {
         testUser.provideLiquidity(
             address(pair),
             address(token0),
@@ -230,12 +230,12 @@ contract ZuniswapV2PairTest is Test {
         assertEq(token1.balanceOf(address(testUser)), 10 ether - 1000);
     }
 
-    function testBurnZeroTotalSupply() public {
+    function test_BurnZeroTotalSupply() public {
         vm.expectRevert(encodeError("Panic(uint256)", 0x12));
         pair.burn(address(this));
     }
 
-    function testBurnZeroLiquidity() public {
+    function test_BurnZeroLiquidity() public {
         token0.transfer(address(pair), 1 ether);
         token1.transfer(address(pair), 1 ether);
         pair.mint(address(this));
@@ -245,7 +245,7 @@ contract ZuniswapV2PairTest is Test {
         pair.burn(address(this));
     }
 
-    function testReservesPacking() public {
+    function test_ReservesPacking() public {
         token0.transfer(address(pair), 1 ether);
         token1.transfer(address(pair), 2 ether);
         pair.mint(address(this));
@@ -257,7 +257,7 @@ contract ZuniswapV2PairTest is Test {
         );
     }
 
-    function testSwapBasicScenario() public {
+    function test_SwapBasicScenario() public {
         token0.transfer(address(pair), 1 ether);
         token1.transfer(address(pair), 2 ether);
         pair.mint(address(this));
@@ -279,7 +279,7 @@ contract ZuniswapV2PairTest is Test {
         assertReserves(1 ether + 0.1 ether, uint112(2 ether - amountOut));
     }
 
-    function testSwapBasicScenarioReverseDirection() public {
+    function test_SwapBasicScenarioReverseDirection() public {
         token0.transfer(address(pair), 1 ether);
         token1.transfer(address(pair), 2 ether);
         pair.mint(address(this));
@@ -300,7 +300,7 @@ contract ZuniswapV2PairTest is Test {
         assertReserves(1 ether - 0.09 ether, 2 ether + 0.2 ether);
     }
 
-    function testSwapBidirectional() public {
+    function test_SwapBidirectional() public {
         token0.transfer(address(pair), 1 ether);
         token1.transfer(address(pair), 2 ether);
         pair.mint(address(this));
@@ -322,7 +322,7 @@ contract ZuniswapV2PairTest is Test {
         assertReserves(1 ether + 0.01 ether, 2 ether + 0.02 ether);
     }
 
-    function testSwapZeroOut() public {
+    function test_SwapZeroOut() public {
         token0.transfer(address(pair), 1 ether);
         token1.transfer(address(pair), 2 ether);
         pair.mint(address(this));
@@ -331,7 +331,7 @@ contract ZuniswapV2PairTest is Test {
         pair.swap(0, 0, address(this), "");
     }
 
-    function testSwapInsufficientLiquidity() public {
+    function test_SwapInsufficientLiquidity() public {
         token0.transfer(address(pair), 1 ether);
         token1.transfer(address(pair), 2 ether);
         pair.mint(address(this));
@@ -343,7 +343,7 @@ contract ZuniswapV2PairTest is Test {
         pair.swap(1.1 ether, 0, address(this), "");
     }
 
-    function testSwapUnderpriced() public {
+    function test_SwapUnderpriced() public {
         token0.transfer(address(pair), 1 ether);
         token1.transfer(address(pair), 2 ether);
         pair.mint(address(this));
@@ -364,7 +364,7 @@ contract ZuniswapV2PairTest is Test {
         assertReserves(1 ether + 0.1 ether, 2 ether - 0.09 ether);
     }
 
-    function testSwapOverpriced() public {
+    function test_SwapOverpriced() public {
         token0.transfer(address(pair), 1 ether);
         token1.transfer(address(pair), 2 ether);
         pair.mint(address(this));
@@ -382,7 +382,7 @@ contract ZuniswapV2PairTest is Test {
         assertReserves(1 ether, 2 ether);
     }
 
-    function testSwapUnpaidFee() public {
+    function test_SwapUnpaidFee() public {
         token0.transfer(address(pair), 1 ether);
         token1.transfer(address(pair), 2 ether);
         pair.mint(address(this));
@@ -393,7 +393,7 @@ contract ZuniswapV2PairTest is Test {
         pair.swap(0, 0.181322178776029827 ether, address(this), "");
     }
 
-    function testCumulativePrices() public {
+    function test_CumulativePrices() public {
         vm.warp(0);
         token0.transfer(address(pair), 1 ether);
         token1.transfer(address(pair), 1 ether);
@@ -455,7 +455,7 @@ contract ZuniswapV2PairTest is Test {
         );
     }
 
-    function testFlashloan() public {
+    function test_Flashloan() public {
         token0.transfer(address(pair), 1 ether);
         token1.transfer(address(pair), 2 ether);
         pair.mint(address(this));

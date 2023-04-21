@@ -53,7 +53,7 @@ contract UniswapV2LibraryTest is Test {
         pair3 = UniswapV2Pair(pairAddress);
     }
 
-    function testGetReserves() public {
+    function test_GetReserves() public {
         tokenA.transfer(address(pair), 1.1 ether);
         tokenB.transfer(address(pair), 0.8 ether);
 
@@ -69,7 +69,7 @@ contract UniswapV2LibraryTest is Test {
         assertEq(reserve1, 0.8 ether);
     }
 
-    function testQuote() public {
+    function test_Quote() public {
         uint256 amountOut = UniswapV2Library.quote(1 ether, 1 ether, 1 ether);
         assertEq(amountOut, 1 ether);
 
@@ -80,7 +80,7 @@ contract UniswapV2LibraryTest is Test {
         assertEq(amountOut, 2 ether);
     }
 
-    function testPairFor() public {
+    function test_PairFor() public {
         address pairAddress = UniswapV2Library.pairFor(
             address(factory),
             address(tokenA),
@@ -90,7 +90,7 @@ contract UniswapV2LibraryTest is Test {
         assertEq(pairAddress, factory.pairs(address(tokenA), address(tokenB)));
     }
 
-    function testPairForTokensSorting() public {
+    function test_PairForTokensSorting() public {
         address pairAddress = UniswapV2Library.pairFor(
             address(factory),
             address(tokenB),
@@ -100,7 +100,7 @@ contract UniswapV2LibraryTest is Test {
         assertEq(pairAddress, factory.pairs(address(tokenA), address(tokenB)));
     }
 
-    function testGetAmountOut() public {
+    function test_GetAmountOut() public {
         uint256 amountOut = UniswapV2Library.getAmountOut(
             1000,
             1 ether,
@@ -109,22 +109,22 @@ contract UniswapV2LibraryTest is Test {
         assertEq(amountOut, 1495);
     }
 
-    function testGetAmountOutZeroInputAmount() public {
+    function test_GetAmountOutZeroInputAmount() public {
         vm.expectRevert(encodeError("InsufficientAmount()"));
         UniswapV2Library.getAmountOut(0, 1 ether, 1.5 ether);
     }
 
-    function testGetAmountOutZeroInputReserve() public {
+    function test_GetAmountOutZeroInputReserve() public {
         vm.expectRevert(encodeError("InsufficientLiquidity()"));
         UniswapV2Library.getAmountOut(1000, 0, 1.5 ether);
     }
 
-    function testGetAmountOutZeroOutputReserve() public {
+    function test_GetAmountOutZeroOutputReserve() public {
         vm.expectRevert(encodeError("InsufficientLiquidity()"));
         UniswapV2Library.getAmountOut(1000, 1 ether, 0);
     }
 
-    function testGetAmountsOut() public {
+    function test_GetAmountsOut() public {
         tokenA.transfer(address(pair), 1 ether);
         tokenB.transfer(address(pair), 2 ether);
         pair.mint(address(this));
@@ -156,7 +156,7 @@ contract UniswapV2LibraryTest is Test {
         assertEq(amounts[3], 0.141817942760565270 ether);
     }
 
-    function testGetAmountIn() public {
+    function test_GetAmountIn() public {
         uint256 amountIn = UniswapV2Library.getAmountIn(
             1495,
             1 ether,
@@ -165,7 +165,7 @@ contract UniswapV2LibraryTest is Test {
         assertEq(amountIn, 1000);
     }
 
-    function testGetAmountsOutInvalidPath() public {
+    function test_GetAmountsOutInvalidPath() public {
         address[] memory path = new address[](1);
         path[0] = address(tokenA);
 
@@ -173,12 +173,12 @@ contract UniswapV2LibraryTest is Test {
         UniswapV2Library.getAmountsOut(address(factory), 0.1 ether, path);
     }
 
-    function testGetAmountInZeroInputAmount() public {
+    function test_GetAmountInZeroInputAmount() public {
         vm.expectRevert(encodeError("InsufficientAmount()"));
         UniswapV2Library.getAmountIn(0, 1 ether, 1.5 ether);
     }
 
-    function testGetAmountInZeroOutputReserve() public {
+    function test_GetAmountInZeroOutputReserve() public {
         vm.expectRevert(encodeError("InsufficientLiquidity()"));
         UniswapV2Library.getAmountIn(1000, 1 ether, 0);
     }

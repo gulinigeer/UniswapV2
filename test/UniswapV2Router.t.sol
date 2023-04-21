@@ -39,7 +39,7 @@ contract UniswapV2RouterTest is Test {
         encoded = abi.encodeWithSignature(error);
     }
 
-    function testAddLiquidityNoPair() public {
+    function test_AddLiquidityNoPair() public {
         tokenA.approve(address(router), 1 ether);
         tokenB.approve(address(router), 1 ether);
 
@@ -74,7 +74,7 @@ contract UniswapV2RouterTest is Test {
         assertEq(tokenB.balanceOf(address(this)), 19 ether);
     }
 
-    function testAddLiquidityAmountBOptimalIsOk() public {
+    function test_AddLiquidityAmountBOptimalIsOk() public {
         address pairAddress = factory.createPair(
             address(tokenA),
             address(tokenB)
@@ -108,7 +108,7 @@ contract UniswapV2RouterTest is Test {
         assertEq(liquidity, 1414213562373095048);
     }
 
-    function testAddLiquidityAmountBOptimalIsTooLow() public {
+    function test_AddLiquidityAmountBOptimalIsTooLow() public {
         address pairAddress = factory.createPair(
             address(tokenA),
             address(tokenB)
@@ -137,7 +137,7 @@ contract UniswapV2RouterTest is Test {
         );
     }
 
-    function testAddLiquidityAmountBOptimalTooHighAmountATooLow() public {
+    function test_AddLiquidityAmountBOptimalTooHighAmountATooLow() public {
         address pairAddress = factory.createPair(
             address(tokenA),
             address(tokenB)
@@ -166,7 +166,7 @@ contract UniswapV2RouterTest is Test {
         );
     }
 
-    function testAddLiquidityAmountBOptimalIsTooHighAmountAOk() public {
+    function test_AddLiquidityAmountBOptimalIsTooHighAmountAOk() public {
         address pairAddress = factory.createPair(
             address(tokenA),
             address(tokenB)
@@ -198,7 +198,7 @@ contract UniswapV2RouterTest is Test {
         assertEq(liquidity, 1272792206135785543);
     }
 
-    function testRemoveLiquidity() public {
+    function test_RemoveLiquidity() public {
         tokenA.approve(address(router), 1 ether);
         tokenB.approve(address(router), 1 ether);
 
@@ -236,7 +236,7 @@ contract UniswapV2RouterTest is Test {
         assertEq(tokenB.balanceOf(address(this)), 20 ether - 1000);
     }
 
-    function testRemoveLiquidityPartially() public {
+    function test_RemoveLiquidityPartially() public {
         tokenA.approve(address(router), 1 ether);
         tokenB.approve(address(router), 1 ether);
 
@@ -275,7 +275,7 @@ contract UniswapV2RouterTest is Test {
         assertEq(tokenB.balanceOf(address(this)), 20 ether - 0.7 ether - 300);
     }
 
-    function testRemoveLiquidityInsufficientAAmount() public {
+    function test_RemoveLiquidityInsufficientAAmount() public {
         tokenA.approve(address(router), 1 ether);
         tokenB.approve(address(router), 1 ether);
 
@@ -306,7 +306,7 @@ contract UniswapV2RouterTest is Test {
         );
     }
 
-    function testRemoveLiquidityInsufficientBAmount() public {
+    function test_RemoveLiquidityInsufficientBAmount() public {
         tokenA.approve(address(router), 1 ether);
         tokenB.approve(address(router), 1 ether);
 
@@ -337,7 +337,7 @@ contract UniswapV2RouterTest is Test {
         );
     }
 
-    function testSwapExactTokensForTokens() public {
+    function test_SwapExactTokensForTokens() public {
         tokenA.approve(address(router), 1 ether);
         tokenB.approve(address(router), 2 ether);
         tokenC.approve(address(router), 1 ether);
@@ -386,7 +386,7 @@ contract UniswapV2RouterTest is Test {
         );
     }
 
-    function testSwapTokensForExactTokens() public {
+    function test_SwapTokensForExactTokens() public {
         tokenA.approve(address(router), 1 ether);
         tokenB.approve(address(router), 2 ether);
         tokenC.approve(address(router), 1 ether);

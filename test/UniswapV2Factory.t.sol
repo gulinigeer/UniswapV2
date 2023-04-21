@@ -30,7 +30,7 @@ contract ZuniswapV2FactoryTest is Test {
         encoded = abi.encodeWithSignature(error);
     }
 
-    function testCreatePair() public {
+    function test_CreatePair() public {
         address pairAddress = factory.createPair(
             address(token1),
             address(token0)
@@ -42,7 +42,7 @@ contract ZuniswapV2FactoryTest is Test {
         assertEq(pair.token1(), address(token1));
     }
 
-    function testCreatePairZeroAddressExists() public {
+    function test_CreatePairZeroAddressExists() public {
         vm.expectRevert(encodeError("ZeroAddress()"));
         factory.createPair(address(0), address(token0));
 
